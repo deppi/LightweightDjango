@@ -49,6 +49,7 @@ class ImageForm(forms.Form):
             content = BytesIO()
             image.save(content, image_format) # convert image to bytes
             content.seek(0) # start the stream on the beginning of the image
+            cache.set(key, content, 60 * 60) # cache for one hour
         return content
 
 def placeholder(request, width, height):
